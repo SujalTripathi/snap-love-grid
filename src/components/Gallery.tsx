@@ -3,7 +3,6 @@ import { useFetchPhotos } from "@/hooks/useFetchPhotos";
 import PhotoCard from "./PhotoCard";
 import SearchInput from "./SearchInput";
 import { Loader2, Heart, LayoutGrid } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
 
 type FavouritesState = Set<string>;
 type FavouritesAction = { type: "TOGGLE_FAVOURITE"; id: string } | { type: "INIT"; ids: string[] };
@@ -120,40 +119,26 @@ const Gallery = () => {
       </div>
 
       {/* Grid */}
-      <AnimatePresence mode="wait">
-        {filteredPhotos.length === 0 ? (
-          <motion.div
-            key="empty"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="flex flex-col items-center justify-center py-20 gap-3"
-          >
-            <LayoutGrid size={40} className="text-muted-foreground/30" />
-            <p className="text-muted-foreground">
-              {showFavouritesOnly ? "No favourites yet. Heart some photos!" : "No photos match your search."}
-            </p>
-          </motion.div>
-        ) : (
-          <motion.div
-            key="grid"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5"
-          >
-            {filteredPhotos.map((photo, i) => (
-              <PhotoCard
-                key={photo.id}
-                photo={photo}
-                index={i}
-                isFavourite={favourites.has(photo.id)}
-                onToggleFavourite={handleToggleFavourite}
-              />
-            ))}
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {filteredPhotos.length === 0 ? (
+        <div className="flex flex-col items-center justify-center py-20 gap-3 animate-fade-in">
+          <LayoutGrid size={40} className="text-muted-foreground/30" />
+          <p className="text-muted-foreground">
+            {showFavouritesOnly ? "No favourites yet. Heart some photos!" : "No photos match your search."}
+          </p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+          {filteredPhotos.map((photo, i) => (
+            <PhotoCard
+              key={photo.id}
+              photo={photo}
+              index={i}
+              isFavourite={favourites.has(photo.id)}
+              onToggleFavourite={handleToggleFavourite}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

@@ -1,19 +1,12 @@
 import Gallery from "@/components/Gallery";
 import { Camera } from "lucide-react";
-import { motion } from "framer-motion";
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <header className="pt-12 pb-8 text-center relative overflow-hidden">
-        {/* Subtle gradient glow */}
         <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent pointer-events-none" />
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="relative"
-        >
+        <div className="relative animate-fade-in">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium mb-4">
             <Camera size={14} />
             Curated Collection
@@ -24,7 +17,7 @@ const Index = () => {
           <p className="mt-3 text-muted-foreground max-w-md mx-auto">
             Discover and save beautiful photography from around the world
           </p>
-        </motion.div>
+        </div>
       </header>
       <main className="container pb-16 px-4">
         <Gallery />
