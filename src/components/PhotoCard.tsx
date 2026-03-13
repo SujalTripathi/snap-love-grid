@@ -1,5 +1,4 @@
 import { Heart, Download, ExternalLink } from "lucide-react";
-import { motion } from "framer-motion";
 import { useState, forwardRef } from "react";
 import type { Photo } from "@/hooks/useFetchPhotos";
 
@@ -14,12 +13,10 @@ const PhotoCard = forwardRef<HTMLDivElement, PhotoCardProps>(({ photo, isFavouri
   const [loaded, setLoaded] = useState(false);
 
   return (
-    <motion.div
+    <div
       ref={ref}
-      initial={{ opacity: 0, y: 24 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, delay: index * 0.04, ease: "easeOut" }}
-      className="group relative rounded-2xl overflow-hidden bg-card border border-border shadow-sm hover:shadow-gallery transition-all duration-500 hover:-translate-y-1"
+      style={{ animationDelay: `${index * 40}ms` }}
+      className="group relative rounded-2xl overflow-hidden bg-card border border-border shadow-sm hover:shadow-gallery transition-all duration-500 hover:-translate-y-1 animate-fade-in opacity-0 [animation-fill-mode:forwards]"
     >
       {/* Image */}
       <div className="aspect-[4/3] overflow-hidden relative bg-muted">
@@ -37,11 +34,10 @@ const PhotoCard = forwardRef<HTMLDivElement, PhotoCardProps>(({ photo, isFavouri
         {/* Overlay on hover */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-        {/* Top-right heart button (visible on hover or if favourited) */}
-        <motion.button
-          whileTap={{ scale: 0.8 }}
+        {/* Top-right heart button */}
+        <button
           onClick={() => onToggleFavourite(photo.id)}
-          className={`absolute top-3 right-3 p-2 rounded-full backdrop-blur-md transition-all duration-300 ${
+          className={`absolute top-3 right-3 p-2 rounded-full backdrop-blur-md transition-all duration-300 active:scale-90 ${
             isFavourite
               ? "bg-heart/20 opacity-100"
               : "bg-black/30 opacity-0 group-hover:opacity-100"
@@ -56,7 +52,7 @@ const PhotoCard = forwardRef<HTMLDivElement, PhotoCardProps>(({ photo, isFavouri
                 : "text-white/90 hover:text-heart transition-colors"
             }
           />
-        </motion.button>
+        </button>
 
         {/* Bottom overlay info (on hover) */}
         <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out">
@@ -95,7 +91,7 @@ const PhotoCard = forwardRef<HTMLDivElement, PhotoCardProps>(({ photo, isFavouri
           #{photo.id}
         </span>
       </div>
-    </motion.div>
+    </div>
   );
 });
 
