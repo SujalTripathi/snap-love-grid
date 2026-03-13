@@ -1,6 +1,6 @@
 import { Heart, Download, ExternalLink } from "lucide-react";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, forwardRef } from "react";
 import type { Photo } from "@/hooks/useFetchPhotos";
 
 interface PhotoCardProps {
@@ -10,11 +10,12 @@ interface PhotoCardProps {
   index: number;
 }
 
-const PhotoCard = ({ photo, isFavourite, onToggleFavourite, index }: PhotoCardProps) => {
+const PhotoCard = forwardRef<HTMLDivElement, PhotoCardProps>(({ photo, isFavourite, onToggleFavourite, index }, ref) => {
   const [loaded, setLoaded] = useState(false);
 
   return (
     <motion.div
+      ref={ref}
       initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: index * 0.04, ease: "easeOut" }}
