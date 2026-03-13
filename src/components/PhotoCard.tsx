@@ -97,6 +97,8 @@ const PhotoCard = forwardRef<HTMLDivElement, PhotoCardProps>(({ photo, isFavouri
       </div>
     </motion.div>
   );
-};
+});
+
+PhotoCard.displayName = "PhotoCard";
 
 export default PhotoCard;
